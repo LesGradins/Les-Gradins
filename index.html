@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Les Gradins — Le média des enceintes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #111110;
+      --white: #FAFAF8;
+      --gray-100: #F2F1EE;
+      --gray-200: #E2E1DC;
+      --gray-400: #A8A79F;
+      --gray-600: #6B6A63;
+      --accent: #111110;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--black);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+
+    /* ── NAVBAR ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo-dot {
+      width: 7px; height: 7px;
+      background: var(--black);
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gray-600);
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+    .btn-subscribe {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 7px 16px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+    }
+
+    .btn-subscribe:hover { opacity: 0.8; }
+
+    /* ── HERO ── */
+    .hero {
+      border-bottom: 1px solid var(--gray-200);
+      padding: 5rem 2.5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+    }
+
+    .hero-left {}
+
+    .hero-kicker {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-kicker::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gray-400);
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.5px;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--gray-600);
+      max-width: 380px;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 22px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.8; }
+
+    .btn-ghost {
+      font-size: 13px;
+      color: var(--gray-600);
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover { color: var(--black); }
+
+    .hero-right {}
+
+    .hero-featured-card {
+      background: var(--gray-100);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 220px;
+      background: var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img-icon {
+      opacity: 0.2;
+    }
+
+    .hero-card-body { padding: 1.5rem; }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--gray-600);
+      border: 1px solid var(--gray-200);
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-card-body h2 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+      color: var(--black);
+    }
+
+    .hero-card-body p {
+      font-size: 13px;
+      color: var(--gray-600);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .meta {
+      font-size: 11px;
+      color: var(--gray-400);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-sep { color: var(--gray-200); }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .stat {
+      padding: 1.25rem 2rem;
+      border-right: 1px solid var(--gray-200);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--black);
+      letter-spacing: -0.5px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 2px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── SECTION ── */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 2.5rem 1.25rem;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .section-head h2 {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-head h2::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--black);
+    }
+
+    .section-link {
+      font-size: 12px;
+      color: var(--gray-400);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .section-link:hover { color: var(--black); }
+
+    /* ── ARTICLE GRID ── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .article-card {
+      padding: 1.75rem 2rem;
+      border-right: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .article-card:hover { background: var(--gray-100); }
+
+    .article-card:nth-child(3n) { border-right: none; }
+
+    .article-thumb {
+      width: 100%;
+      height: 130px;
+      background: var(--gray-100);
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .article-card h3 {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+      color: var(--black);
+    }
+
+    .article-card p {
+      font-size: 12.5px;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── EDITORIAL BAND ── */
+    .editorial {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .editorial-main {
+      padding: 2.5rem 2.5rem 2.5rem;
+      border-right: 1px solid var(--gray-200);
+    }
+
+    .editorial-main blockquote {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--black);
+      border-left: 2px solid var(--black);
+      padding-left: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .editorial-main p {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .editorial-sidebar {
+      padding: 2rem;
+      background: var(--gray-100);
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--gray-600);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-title::before {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 1px;
+      background: var(--gray-400);
+    }
+
+    .ranking-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .ranking-item:last-child { border-bottom: none; }
+
+    .rank-num {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      min-width: 22px;
+      line-height: 1;
+      padding-top: 2px;
+    }
+
+    .rank-info h4 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--black);
+      line-height: 1.3;
+    }
+
+    .rank-info span {
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      padding: 4rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .newsletter-tag {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .newsletter h2 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.3px;
+    }
+
+    .newsletter p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      max-width: 380px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 8px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      font-family: var(--sans);
+      font-size: 13px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      color: var(--white);
+      outline: none;
+    }
+
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.3); }
+    .newsletter-form input:focus { border-color: rgba(255,255,255,0.35); }
+
+    .newsletter-form button {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 20px;
+      background: var(--white);
+      color: var(--black);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .newsletter-form button:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: var(--gray-400);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--black); }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-left  { animation: fadeUp 0.6s ease both; }
+    .hero-right { animation: fadeUp 0.6s 0.15s ease both; }
+    .stats-bar  { animation: fadeUp 0.6s 0.25s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card { border-right: none; }
+      .editorial { grid-template-columns: 1fr; }
+      .editorial-main { border-right: none; }
+      .newsletter { padding: 3rem 1.5rem; }
+      .newsletter-form { flex-direction: column; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="nav">
+    <div class="nav-logo">
+      <div class="nav-logo-dot"></div>
+      Les Gradins
+    </div>
+    <ul class="nav-links">
+      <li><a href="#stades">Stades</a></li>
+      <li><a href="#reportages">Reportages</a></li>
+      <li><a href="#classements">Classements</a></li>
+      <li><a href="#histoire">Histoire</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-subscribe" onclick="document.querySelector('.newsletter-form input').focus()">S'abonner</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-kicker">Le média des enceintes</div>
+      <h1>Là où le football<br>prend tout son <em>sens</em></h1>
+      <p class="hero-desc">Portraits, reportages et coulisses des stades qui font l'histoire du football — des géants européens aux joyaux oubliés.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.querySelector('#stades').scrollIntoView({behavior:'smooth'})">Lire les articles</button>
+        <span class="btn-ghost" onclick="document.querySelector('.newsletter-form input').focus()">S'inscrire à la newsletter →</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-featured-card">
+        <div class="hero-img">
+          <svg class="hero-img-icon" width="100" height="72" viewBox="0 0 100 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="12" width="90" height="50" rx="4" stroke="#111" stroke-width="2.5"/>
+            <path d="M5 28 H95" stroke="#111" stroke-width="2"/>
+            <path d="M5 44 H95" stroke="#111" stroke-width="2"/>
+            <rect x="35" y="28" width="30" height="16" stroke="#111" stroke-width="2"/>
+            <circle cx="50" cy="36" r="6" stroke="#111" stroke-width="2"/>
+            <path d="M20 12 L20 62" stroke="#111" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <path d="M80 12 L80 62" stroke="#111" stroke-width="1.5" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        <div class="hero-card-body">
+          <div class="tag">À la une</div>
+          <h2>Le Vélodrome, cathédrale du Sud</h2>
+          <p>Plus qu'un stade, l'Orange Vélodrome est une institution. Retour sur 85 ans d'une enceinte mythique.</p>
+          <div class="meta">
+            <span>Rémi Castex</span>
+            <span class="meta-sep">·</span>
+            <span>12 avril 2025</span>
+            <span class="meta-sep">·</span>
+            <span>8 min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">312</div>
+      <div class="stat-label">Stades couverts</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">14</div>
+      <div class="stat-label">Pays explorés</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2 700</div>
+      <div class="stat-label">Abonnés</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1994</div>
+      <div class="stat-label">Stade le plus ancien couvert</div>
+    </div>
+  </div>
+
+  <!-- DERNIERS ARTICLES -->
+  <div id="stades">
+    <div class="section-head">
+      <h2>Derniers articles</h2>
+      <span class="section-link">Voir tout →</span>
+    </div>
+    <div class="articles-grid">
+      <div class="article-card">
+        <div class="article-thumb"></div>
+        <div class="tag">Portrait</div>
+        <h3>Roazhon Park, le stade qui résiste au temps</h3>
+        <p>Inauguré en 1912, le stade rennais cumule les vies. Reportage au cœur d'une enceinte centenaire.</p>
+        <div class="meta">7 min · Rennes</div>
+      </div>
+      <div class="article-card">
+        <div class="article-thumb"></div>
+        <div class="tag">Architecture</div>
+        <h3>Pourquoi les stades modernes sonnent creux</h3>
+        <p>Trop grands, trop lisses, trop parfaits. Une réflexion sur ce que l'architecture contemporaine a perdu.</p>
+        <div class="meta">9 min · Tribune libre</div>
+      </div>
+      <div class="article-card">
+        <div class="article-thumb"></div>
+        <div class="tag">Coulisses</div>
+        <h3>Une nuit dans les entrailles du Parc des Princes</h3>
+        <p>Gardiens, techniciens, jardiniers. Quand le stade dort, une autre vie commence sous les tribunes.</p>
+        <div class="meta">11 min · Paris</div>
+      </div>
+      <div class="article-card">
+        <div class="article-thumb"></div>
+        <div class="tag">Actualité</div>
+        <h3>Grand Stade de Lyon : 10 ans déjà</h3>
+        <p>Le Groupama Stadium souffle ses dix bougies. Retour sur une décennie de polémiques et de succès.</p>
+        <div class="meta">5 min · Décines</div>
+      </div>
+      <div class="article-card">
+        <div class="article-thumb"></div>
+        <div class="tag">Coupe du Monde 2030</div>
+        <h3>Les 5 stades français candidats au Mondial</h3>
+        <p>Avec la Coupe du Monde 2030 en ligne de mire, la France prépare ses enceintes. Tour d'horizon.</p>
+        <div class="meta">10 min · Analyse</div>
+      </div>
+      <div class="article-card">
+        <div class="article-thumb"></div>
+        <div class="tag">Ligue 2</div>
+        <h3>Ces stades de Ligue 2 qui méritent le détour</h3>
+        <p>Loin des projecteurs, des joyaux se cachent en deuxième division. Notre sélection de cinq enceintes à visiter.</p>
+        <div class="meta">6 min · Découverte</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDITORIAL + CLASSEMENT -->
+  <div class="editorial" id="classements">
+    <div class="editorial-main">
+      <div class="section-head" style="padding: 0 0 1.25rem; border-bottom: 1px solid var(--gray-200); margin-bottom: 1.5rem;">
+        <h2>Le point de vue des Gradins</h2>
+      </div>
+      <div class="tag">Éditorial</div>
+      <h3 style="font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin: 0.75rem 0 1rem; line-height: 1.3;">Les stades ne sont pas des salles de concert</h3>
+      <blockquote>
+        "Un stade sans âme, c'est du béton. Un stade avec une histoire, c'est une cathédrale."
+      </blockquote>
+      <p>Depuis quelques années, la tendance est à la multifonctionnalité. Des concerts, des conférences, des salons professionnels. On optimise, on rentabilise, on diversifie. C'est compréhensible, mais quelque chose se perd dans cette course à l'usage.</p>
+      <p>Un stade de football n'est pas un équipement culturel polyvalent. C'est un lieu fait pour le football. Pour le bruit sourd d'un but, pour les 90 minutes d'incertitude, pour cette communion étrange entre 40 000 inconnus.</p>
+      <div class="meta" style="margin-top: 1.5rem;">
+        <span style="font-weight:500; color: var(--black);">La rédaction des Gradins</span>
+        <span class="meta-sep">·</span>
+        <span>Avril 2025</span>
+      </div>
+    </div>
+    <div class="editorial-sidebar">
+      <div class="sidebar-title">Top 5 — Ligue 1</div>
+      <div class="ranking-item">
+        <div class="rank-num">01</div>
+        <div class="rank-info">
+          <h4>Orange Vélodrome</h4>
+          <span>67 394 places · Marseille</span>
+        </div>
+      </div>
+      <div class="ranking-item">
+        <div class="rank-num">02</div>
+        <div class="rank-info">
+          <h4>Groupama Stadium</h4>
+          <span>59 186 places · Lyon</span>
+        </div>
+      </div>
+      <div class="ranking-item">
+        <div class="rank-num">03</div>
+        <div class="rank-info">
+          <h4>Parc des Princes</h4>
+          <span>47 929 places · Paris</span>
+        </div>
+      </div>
+      <div class="ranking-item">
+        <div class="rank-num">04</div>
+        <div class="rank-info">
+          <h4>Allianz Riviera</h4>
+          <span>35 624 places · Nice</span>
+        </div>
+      </div>
+      <div class="ranking-item">
+        <div class="rank-num">05</div>
+        <div class="rank-info">
+          <h4>Stade Pierre-Mauroy</h4>
+          <span>50 157 places · Lille</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="newsletter-tag">Newsletter</div>
+    <h2>Les Gradins dans votre boîte</h2>
+    <p>Un article par semaine, envoyé chaque jeudi matin. Gratuit, sans publicité, sans compromis.</p>
+    <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+      <input type="email" placeholder="votre@email.com" required />
+      <button type="submit">S'inscrire</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Les Gradins</div>
+    <ul class="footer-links">
+      <li><a href="#">À propos</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Mentions légales</a></li>
+      <li><a href="#">RSS</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 Les Gradins</div>
+  </footer>
+
+  <script>
+    function handleSubscribe(e) {
+      e.preventDefault();
+      const input = e.target.querySelector('input');
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'Inscrit !';
+      btn.style.background = '#d4edda';
+      btn.style.color = '#155724';
+      input.value = '';
+      setTimeout(() => {
+        btn.textContent = "S'inscrire";
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 3000);
+    }
+
+    // Intersection observer for article cards fade-in
+    const cards = document.querySelectorAll('.article-card, .stat, .hero-featured-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.animation = `fadeUp 0.5s ${i * 0.05}s ease both`;
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(c => observer.observe(c));
+  </script>
+</body>
+</html>
